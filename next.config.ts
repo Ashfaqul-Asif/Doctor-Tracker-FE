@@ -10,6 +10,12 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
 
   /**
+   * Pin the workspace root. Without this, Turbopack walks up the filesystem, finds
+   * an unrelated lockfile in the user's home directory, and infers the wrong root.
+   */
+  turbopack: { root: __dirname },
+
+  /**
    * Same-origin proxy to the standalone Express API.
    *
    * The client and API are deployed as two separate Vercel projects, which sit on
