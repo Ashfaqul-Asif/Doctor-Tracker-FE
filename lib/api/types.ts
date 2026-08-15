@@ -41,19 +41,25 @@ export interface Paged<T> {
 // Entities
 // ---------------------------------------------------------------------------
 
-export type DoctorStatus = 'active' | 'on-leave' | 'inactive';
-export const DOCTOR_STATUSES: DoctorStatus[] = ['active', 'on-leave', 'inactive'];
+/**
+ * Declared as `as const` tuples, not `T[]`.
+ *
+ * z.enum needs a tuple to infer a literal union; a plain array widens every value to
+ * `string`, which then fails to satisfy the API's own literal types at the call site.
+ */
+export const DOCTOR_STATUSES = ['active', 'on-leave', 'inactive'] as const;
+export type DoctorStatus = (typeof DOCTOR_STATUSES)[number];
 
-export type PatientStatus = 'active' | 'under-observation' | 'recovered' | 'discharged';
-export const PATIENT_STATUSES: PatientStatus[] = [
+export const PATIENT_STATUSES = [
   'active',
   'under-observation',
   'recovered',
   'discharged',
-];
+] as const;
+export type PatientStatus = (typeof PATIENT_STATUSES)[number];
 
-export type Gender = 'male' | 'female' | 'other';
-export const GENDERS: Gender[] = ['male', 'female', 'other'];
+export const GENDERS = ['male', 'female', 'other'] as const;
+export type Gender = (typeof GENDERS)[number];
 
 export interface User {
   id: string;
